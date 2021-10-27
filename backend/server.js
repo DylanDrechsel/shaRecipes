@@ -1,23 +1,40 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { ApolloServer } from 'apollo-server-express'
+import typeDefs from './graphql/typeDefs.js';
+import resolvers from './graphql/reslovers/index.js';
 
 dotenv.config();
-const app = express()
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(
-	cors({
-		// credentials: true,
-		origin: '*',
-	})
-);
 
-app.get('/', (req, res) => {
-	res.send('Welcome to SQL');
-});
+const startApolloServer = async () => {
+    const app = express()
+    const server = new ApolloServer({
+        typeDefs,
+        resolvers,
+        context: ({req}) => ({req})
+    })
 
-app.listen(process.env.PORT, () => {
-	console.log(`listening on ${process.env.PORT}`);
-});
+    const whitelist = [
+        "http://localhost:3000",
+        "http://localhost:4000/graphql",        
+        "https://studio.apollographql.com",
+
+    ]
+
+    app.use(cors({ /* credentials: true, */ origin: "*" })); 
+    app.use(express.json());
+	app.use(express.urlencoded({ extended: true }));
+    
+    app.get('/', (req, res) => {
+		res.send('Welcome to SQL');
+	});
+
+    await server.start()
+    await server.applyMiddleware({ app, path: '/graphql', cors: false });
+    await app.listen(process.env.PORT, () => console.log(`Server running on ${process.env.PORT}... GraphQL/Apollo at studio.apollographql.com/dev`));
+}
+
+
+startApolloServer()
