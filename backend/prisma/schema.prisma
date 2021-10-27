@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  firstname  String?
+  lastname   String?
+  username   String  @unique
+  email      String  @unique
+  password   String
+  // all recipes user has created - One to Many
+  recipes    Recipes[]
+  // all likes the users has made - One to Many
+  likes      Likes[]
+  // users profile - One to One
+  profile    Profile?
+  // all comments user has made - One to Many
+  comments   Comment[]
+}
+
+model Recipes {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  title      String
+  // To keep track of total likes to avoid large iterations on the frontend
+  totalLikeValue Int     @default(0)
+  
+  // if the user wants to add some content to their recipe/post
+  content    String?
+  // ingredients for the recipe
+  ingredients Json
+  // directions for the recipe
+  directions Json
+  // published attribution will allow saving post and posting later
+  published  Boolean      @default(true)
+  // category for type of post
+  category   String
+  // Model Relationship (One to Many // User to Recipes)
+  // store userId inside table for prisma to relate to post
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   Int
+  // One to Many // Post to Likes
+  likes      Likes[]
+  // One to Many // Post to Comments
+  comments   Comment[]
+  // for amazon S3 image upload
+  imageUrl   String?
+  imageKey   String?
+}
+
+model Likes {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  like       Boolean     @default(false)
+  recipe     Recipes     @relation(fields: [postId], references: [id])
+  postId     Int
+  
+  author     User        @relation(fields: [authorId], references: [id])
+  authorId   Int  
+}
+
+model Profile {
+  id         Int     @id @default(autoincrement())
+  created    Boolean @default(false)
+  bio        String
+  imageUrl   String?
+  imageKey   String?
+  author     User    @relation(fields: [authorId], references: [id])
+  authorId   Int     @unique
+}
+
+model Comment {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  content    String
+  
+  author     User        @relation(fields: [authorId], references: [id])
+  authorId   Int
+  
+  recipe     Recipes?     @relation(fields: [postId], references: [id])
+  postId     Int?
+}
