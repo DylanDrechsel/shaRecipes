@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 const app = express()
-// const port = 4000
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +18,6 @@ app.get('/', (req, res) => {
 	res.send('Welcome to SQL');
 });
 
-app.listen(process.env.PORT || port, () => {
+app.listen(process.env.PORT, () => {
 	console.log(`listening on ${process.env.PORT}`);
 });
