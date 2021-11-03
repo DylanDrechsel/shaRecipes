@@ -1,3 +1,4 @@
 .env
-docker-compose.yml
 postgres-data/
+docker-compose.yml
+./docker-compose.yml
