@@ -1,0 +1,27 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres
+    image: "postgres:latest"
+    restart: "always"
+    expose:
+      - "5432"
+    environment:
+      - PGDATA=${PGDATA}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ${PGDATA}
+    ports:
+      - "5432:5432"
+  api:
+    container_name: backend
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    ports:
+      - "4003:5000"

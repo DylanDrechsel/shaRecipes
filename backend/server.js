@@ -20,7 +20,6 @@ const startApolloServer = async () => {
         "http://localhost:3000",
         "http://localhost:4000/graphql",        
         "https://studio.apollographql.com",
-
     ]
 
     app.use(cors({ /* credentials: true, */ origin: "*" })); 
