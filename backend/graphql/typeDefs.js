@@ -71,7 +71,7 @@ const typeDefs = gql`
 		# USER MUTATIONS
 		signupUser(signupInput: SignupInput): User!
 		signinUser(email: String!, password: String!): User!
-		updateUser(email: String!): User!
+		updateUser(updateUser: UpdateUser): User!
 		deleteUser: User!
 	}
 
@@ -81,6 +81,13 @@ const typeDefs = gql`
 		firstname: String
 		lastname: String
 		password: String!
+	}
+
+	input UpdateUser {
+		email: String
+		username: String
+		firstname: String
+		lastname: String
 	}
 `;
 
