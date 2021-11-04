@@ -127,8 +127,26 @@ export default {
 			return { ...foundUser, token: token };
 		},
 
-		updateUser: async (_, { email }, context) => {
+		updateUser: async (_, { updateUser: { email, username, firstname, lastname } }, context) => {
 			const user = checkAuth(context);
+			let request = {
+				email: email,
+				username: username,
+				firstname: firstname,
+				lastname: lastname
+			}
+
+			const foundUser = await db.user.findUnique({
+				where: {
+					id: user.id
+				},
+			});
+
+			for await ( const [key, value] of Object.entries(request) ) {
+				if (value === null) {
+					request[key] = foundUser[key]
+				}
+			}
 			
             try {
 				if (!user) {
@@ -138,12 +156,7 @@ export default {
 
 				const newUser = await db.user.update({
 					where: { id: user.id },
-					data: {
-						// firstname: firstname,
-						// lastname: lastname,
-						email: email,
-						// username: username,
-					},
+					data: { ...request }
 				});
 
 				return newUser;
