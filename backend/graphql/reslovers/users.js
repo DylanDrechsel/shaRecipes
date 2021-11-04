@@ -127,7 +127,7 @@ export default {
 			return { ...foundUser, token: token };
 		},
 
-		updateUser: async (_, { firstname, lastname, email, username }, context) => {
+		updateUser: async (_, { email }, context) => {
 			const user = checkAuth(context);
 			
             try {
@@ -139,10 +139,10 @@ export default {
 				const newUser = await db.user.update({
 					where: { id: user.id },
 					data: {
-						firstname: firstname,
-						lastname: lastname,
+						// firstname: firstname,
+						// lastname: lastname,
 						email: email,
-						username: username,
+						// username: username,
 					},
 				});
 

@@ -71,7 +71,7 @@ const typeDefs = gql`
 		# USER MUTATIONS
 		signupUser(signupInput: SignupInput): User!
 		signinUser(email: String!, password: String!): User!
-		updateUser(signupInput: SignupInput): User!
+		updateUser(email: String!): User!
 		deleteUser: User!
 	}
 
