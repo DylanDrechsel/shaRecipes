@@ -61,18 +61,31 @@ const typeDefs = gql`
 		recipe: Recipes
 	}
 
+	# ---------------------------------------- END SCHEMAS ----------------------------------------
+
 	type Query {
 		# USER QUERIES
 		getUser: User
 		allUsersPublishedRecipes: [Recipes]
 		allUsersUnpublishedRecipes: [Recipes]
+
+		# RECIPES QUERIES
+		allRecipes: [Recipes]
+		allPublishedRecipes: [Recipes]
+		recipeById(recipeId: Int): Recipes
 	}
+
 	type Mutation {
 		# USER MUTATIONS
 		signupUser(signupInput: SignupInput): User!
 		signinUser(email: String!, password: String!): User!
 		updateUser(updateUser: UpdateUser): User!
 		deleteUser: User!
+
+		# RECIPES MUTATIONS
+		createRecipe(recipeInput: RecipeInput): Recipes
+		updateRecipe(recipeInput: RecipeInput, recipeId: Int): Recipes
+		deleteRecipe(recipeId: Int): Recipes
 	}
 
 	input SignupInput {
@@ -88,6 +101,16 @@ const typeDefs = gql`
 		username: String
 		firstname: String
 		lastname: String
+	}
+
+	input RecipeInput {
+		title: String
+		category: String
+		content: String
+		directions: JSON
+		ingredients: JSON
+		imageUrl: String
+		imageKey: String
 	}
 `;
 
