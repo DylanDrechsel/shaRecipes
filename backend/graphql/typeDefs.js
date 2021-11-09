@@ -104,6 +104,16 @@ const typeDefs = gql`
 	}
 
 	input RecipeInput {
+		title: String!
+		category: String!
+		content: String
+		directions: JSON!
+		ingredients: JSON!
+		imageUrl: String
+		imageKey: String
+	}
+
+	input UpdateRecipe {
 		title: String
 		category: String
 		content: String
