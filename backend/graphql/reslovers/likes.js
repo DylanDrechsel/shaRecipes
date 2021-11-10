@@ -44,6 +44,10 @@ export default {
             } catch (error) {
                 throw new Error(error)
             }
-        }
+        },
+
+        updateLike: async (_, { recipeId, likeId }, context) => {
+            const user = await checkAuth(context)
+        } 
     }
 }
