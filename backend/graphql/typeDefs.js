@@ -89,7 +89,7 @@ const typeDefs = gql`
 
 		# LIKES MUTATIONS
 		createLike(recipeId: Int): Likes
-		updateLike(recipeId: Int, likeId: Int, like: Boolean): Likes
+		updateLike(likeId: Int): Likes
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
