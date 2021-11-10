@@ -127,6 +127,7 @@ export default {
 			return { ...foundUser, token: token };
 		},
 
+		/* ADD PASSWORD HASHING FOR WHEN A USER UPDATES THEIR PASSWORD ALSO */
 		updateUser: async (_, { updateUser: { email, username, firstname, lastname } }, context) => {
 			const user = checkAuth(context);
 			/* let request = {
@@ -221,6 +222,7 @@ export default {
 					});
 				}
 				
+				/* Add delete all users likes from the database. Deleting them here wont change the TotalLikeValue on the recope schema */
 				const deletedUser = await db.user.delete({
 					where: {
 						id: user.id,
