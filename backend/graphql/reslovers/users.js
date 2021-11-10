@@ -129,7 +129,7 @@ export default {
 
 		updateUser: async (_, { updateUser: { email, username, firstname, lastname } }, context) => {
 			const user = checkAuth(context);
-			let request = {
+			/* let request = {
 				email: email,
 				username: username,
 				firstname: firstname,
@@ -146,7 +146,7 @@ export default {
 				if (value === null) {
 					request[key] = foundUser[key]
 				}
-			}
+			} */
 			
             try {
 				if (!user) {
@@ -156,7 +156,13 @@ export default {
 
 				const newUser = await db.user.update({
 					where: { id: user.id },
-					data: { ...request }
+					// data: { ...request }
+					data: {
+						email: email,
+						username: username,
+						firstname: firstname,
+						lastname: lastname
+					}
 				});
 
 				return newUser;

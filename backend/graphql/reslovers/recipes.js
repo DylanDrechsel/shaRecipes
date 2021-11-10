@@ -110,7 +110,7 @@ export default {
             } 
         },
 
-        updateRecipe: async (_, {recipeId, recipeInput: { title, category, directions, content, ingredients }}, context) => {
+        updateRecipe: async (_, {recipeId, updateRecipe: { title, category, directions, content, ingredients }}, context) => {
             const user = await checkAuth(context) 
             const verified = await handleDocumentOwnership(user.id, recipeId) 
  

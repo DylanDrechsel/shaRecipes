@@ -86,7 +86,13 @@ const typeDefs = gql`
 		createRecipe(recipeInput: RecipeInput): Recipes
 		updateRecipe(recipeInput: RecipeInput, recipeId: Int): Recipes
 		deleteRecipe(recipeId: Int): Recipes
+
+		# LIKES MUTATIONS
+		createLike(recipeId: Int): Likes
+		updateLike(recipeId: Int, likeId: Int, like: Boolean): Likes
 	}
+
+	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
 
 	input SignupInput {
 		email: String!
@@ -104,6 +110,16 @@ const typeDefs = gql`
 	}
 
 	input RecipeInput {
+		title: String!
+		category: String!
+		content: String
+		directions: JSON!
+		ingredients: JSON!
+		imageUrl: String
+		imageKey: String
+	}
+
+	input UpdateRecipe {
 		title: String
 		category: String
 		content: String
