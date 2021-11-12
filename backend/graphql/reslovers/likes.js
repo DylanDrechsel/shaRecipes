@@ -99,7 +99,7 @@ export default {
                         })
                     }
                 } else {
-                    throw new Error('author.id on like does not equal user.id')
+                    throw new Error('author.id on document does not equal user.id')
                 }
             } catch (error) {
                 throw new Error(error)
