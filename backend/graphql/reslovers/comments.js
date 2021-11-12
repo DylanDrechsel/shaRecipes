@@ -53,6 +53,25 @@ export default {
             } catch (error) {
                 throw new Error(error)
             }
+        },
+
+        deleteComment: async (_, { commentId }, context) => {
+            const user = await checkAuth(context)
+            const verfied = await handleCommentOwnership(user.id, commentId)
+
+            try {
+                if (verfied === true) {
+                    return await db.comment.delete({
+                        where: {
+                            id: commentId
+                        }
+                    })
+                } else {
+                    throw new Error('Not Comment Owner')
+                }
+            } catch (error) {
+                throw new Error(error)
+            }
         }
     }
 }
