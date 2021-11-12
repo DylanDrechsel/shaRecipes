@@ -31,6 +31,28 @@ export default {
             } catch (error) {
                 throw new Error(error)
             }
+        },
+
+        updateComment: async (_, { commentId, content }, context) => {
+            const user = await checkAuth(context)
+            const verfied = await handleCommentOwnership(user.id, commentId)
+
+            try {
+                if (verfied === true) {
+                    return await db.comment.update({
+                        where: {
+                            id: commentId
+                        },
+                        data: {
+                            content: content
+                        }
+                    })
+                } else {
+                    throw new Error('Not Comment Owner')
+                }
+            } catch (error) {
+                throw new Error(error)
+            }
         }
     }
 }
