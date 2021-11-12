@@ -52,7 +52,7 @@ export default {
             try {
                 return await db.recipes.findUnique({
                     where: { id: recipeId },
-                    include: { author: true }
+                    include: { author: true, comments: true },
                 })
             } catch (error) {
                 throw new Error(error)
