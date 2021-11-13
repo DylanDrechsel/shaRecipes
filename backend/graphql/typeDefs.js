@@ -73,6 +73,9 @@ const typeDefs = gql`
 		allRecipes: [Recipes]
 		allPublishedRecipes: [Recipes]
 		recipeById(recipeId: Int): Recipes
+
+		# PROFILE QUERIES
+		getUsersProfile: Profile
 	}
 
 	type Mutation {
