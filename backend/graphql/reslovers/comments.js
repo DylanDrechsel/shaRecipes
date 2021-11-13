@@ -4,10 +4,6 @@ import checkAuth from '../../utils/check-auth.js';
 import { handleCommentOwnership } from '../../utils/handleDocumentOwnership.js';
 
 export default {
-    Query: {
-
-    },
-
     Mutation: {
         createComment: async (_, { recipeId, content }, context) => {
             const user = await checkAuth(context)
