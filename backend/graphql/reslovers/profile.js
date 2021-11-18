@@ -4,6 +4,7 @@ import { handleProfileOwnership } from '../../utils/handleDocumentOwnership.js'
 
 export default {
     Query: {
+        /* MIGHT BE ABLE TO BE HANDLED BY THE GETUSER ROUTE */
         getUsersProfile: async (_, {}, context) => {
             const user = await checkAuth(context)
 
@@ -21,7 +22,7 @@ export default {
 
     Mutation: {
         createProfile: async (_, { profileInput: { created, bio, imageUrl, imageKey }}, context) => {
-            const user = checkAuth(context)
+            const user = await checkAuth(context)
 
             try {
                 return await db.profile.create({
@@ -37,6 +38,31 @@ export default {
                         }
                     }
                 })
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+
+        updateProfile: async (_, { profileId, profileInput: { created, bio, imageUrl, imageKey }}, context) => {
+            const user = await checkAuth(context)
+            const verified = await handleProfileOwnership(user.id, profileId)
+
+            try {
+                if (verified === true) {
+                    return await db.profile.update({
+                        where: {
+                            authorId: user.id
+                        },
+                        data: {
+                        created: created,
+                        bio: bio,
+                        imageUrl: imageUrl,
+                        imageKey: imageKey,
+                        }
+                    })
+                } else {
+                    throw new Error('Not profile owner')
+                }
             } catch (error) {
                 throw new Error(error)
             }

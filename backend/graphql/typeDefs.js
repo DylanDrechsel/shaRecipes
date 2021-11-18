@@ -101,7 +101,8 @@ const typeDefs = gql`
 
 		# PROFILE MUTATION
 		createProfile(profileInput: ProfileInput): Profile
-		
+		updateProfile(profileId: Int, profileInput: ProfileInput): Profile
+		deleteProfile(profileId: Int): Profile
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
