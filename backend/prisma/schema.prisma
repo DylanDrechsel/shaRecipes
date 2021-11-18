@@ -19,6 +19,7 @@ model User {
   likes     Likes[]
   profile   Profile?
   recipes   Recipes[]
+  chatrooms Chatrooms[]
 }
 
 model Recipes {
@@ -70,4 +71,19 @@ model Comment {
   postId    Int?
   author    User     @relation(fields: [authorId], references: [id])
   recipe    Recipes? @relation(fields: [postId], references: [id])
+}
+
+model Chatrooms {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  users     String[]
+
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Messages {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content   String
 }
