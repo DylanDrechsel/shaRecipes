@@ -61,6 +61,14 @@ const typeDefs = gql`
 		recipe: Recipes
 	}
 
+	type Chatrooms {
+  		id: ID
+		createdAt: Date
+  		users: [String]
+		author: User
+	}
+
+
 	# ---------------------------------------- END SCHEMAS ----------------------------------------
 
 	type Query {
