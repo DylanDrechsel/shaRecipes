@@ -4,10 +4,6 @@ import checkAuth from '../../utils/check-auth.js';
 import { handleCommentOwnership } from '../../utils/handleDocumentOwnership.js';
 
 export default {
-    Query: {
-
-    },
-
     Mutation: {
         createComment: async (_, { recipeId, content }, context) => {
             const user = await checkAuth(context)
@@ -45,6 +41,25 @@ export default {
                         },
                         data: {
                             content: content
+                        }
+                    })
+                } else {
+                    throw new Error('Not Comment Owner')
+                }
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+
+        deleteComment: async (_, { commentId }, context) => {
+            const user = await checkAuth(context)
+            const verfied = await handleCommentOwnership(user.id, commentId)
+
+            try {
+                if (verfied === true) {
+                    return await db.comment.delete({
+                        where: {
+                            id: commentId
                         }
                     })
                 } else {

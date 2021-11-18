@@ -73,6 +73,9 @@ const typeDefs = gql`
 		allRecipes: [Recipes]
 		allPublishedRecipes: [Recipes]
 		recipeById(recipeId: Int): Recipes
+
+		# PROFILE QUERIES
+		getUsersProfile: Profile
 	}
 
 	type Mutation {
@@ -95,6 +98,10 @@ const typeDefs = gql`
 		createComment(recipeId: Int, content: String): Comment
 		updateComment(commentId: Int, content: String): Comment
 		deleteComment(commentId: Int): Comment
+
+		# PROFILE MUTATION
+		createProfile(profileInput: ProfileInput): Profile
+		
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
@@ -130,6 +137,13 @@ const typeDefs = gql`
 		content: String
 		directions: JSON
 		ingredients: JSON
+		imageUrl: String
+		imageKey: String
+	}
+
+	input ProfileInput {
+		created: Boolean
+		bio: String
 		imageUrl: String
 		imageKey: String
 	}
