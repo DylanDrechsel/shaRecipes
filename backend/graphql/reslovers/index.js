@@ -3,7 +3,7 @@ import recipeResolvers from './recipes.js'
 import likesResolvers from './likes.js'
 import commentsResolvers from './comments.js'
 import profileResolvers from './profile.js';
-import chatroomResolvers from './chatroom.js'
+import chatroomsResolvers from './chatrooms.js'
 import GraphQLJSON from 'graphql-type-json';
 
 export default {
@@ -13,7 +13,7 @@ export default {
 		...likesResolvers.Query,
 		...commentsResolvers.Query,
 		...profileResolvers.Query,
-		...chatroomResolvers.Query
+		...chatroomsResolvers.Query
 	},
 	Mutation: {
 		...usersResolvers.Mutation,
@@ -21,7 +21,7 @@ export default {
 		...likesResolvers.Mutation,
 		...commentsResolvers.Mutation,
 		...profileResolvers.Mutation,
-		...chatroomResolvers.Mutation
+		...chatroomsResolvers.Mutation
 	},
 	JSON: GraphQLJSON,
 };

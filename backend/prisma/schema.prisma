@@ -76,8 +76,8 @@ model Comment {
 model Chatrooms {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  authorId  Int
   guests    String[]
+  authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
 }
 
