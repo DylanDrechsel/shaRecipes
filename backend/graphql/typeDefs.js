@@ -17,6 +17,7 @@ const typeDefs = gql`
 		profile: Profile
 		comments: [Comment]
 		likes: [Likes]
+		chatrooms: [Chatrooms]
 	}
 
 	type Recipes {
@@ -84,6 +85,9 @@ const typeDefs = gql`
 
 		# PROFILE QUERIES
 		getUsersProfile: Profile
+
+		# CHATROOM QUERIES
+		getChatrooms: Chatrooms
 	}
 
 	type Mutation {
