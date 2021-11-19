@@ -64,7 +64,7 @@ const typeDefs = gql`
 	type Chatrooms {
   		id: ID
 		createdAt: Date
-  		users: [String]
+  		guests: [String]
 		author: User
 	}
 
@@ -102,15 +102,18 @@ const typeDefs = gql`
 		createLike(recipeId: Int): Likes
 		updateLike(likeId: Int): Likes
 
-		# COMMENT MUTATION
+		# COMMENT MUTATIONS
 		createComment(recipeId: Int, content: String): Comment
 		updateComment(commentId: Int, content: String): Comment
 		deleteComment(commentId: Int): Comment
 
-		# PROFILE MUTATION
+		# PROFILE MUTATIONS
 		createProfile(profileInput: ProfileInput): Profile
 		updateProfile(profileId: Int, profileInput: ProfileInput): Profile
 		deleteProfile(profileId: Int): Profile
+
+		# CHATROOM MUTATIONS
+		createChatroom(guests: [String]): Chatrooms
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
