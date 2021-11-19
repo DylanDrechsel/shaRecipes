@@ -9,17 +9,17 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   firstname String?
   lastname  String?
-  username  String    @unique
-  email     String    @unique
+  username  String      @unique
+  email     String      @unique
   password  String
+  chatrooms Chatrooms[]
   comments  Comment[]
   likes     Likes[]
   profile   Profile?
   recipes   Recipes[]
-  chatrooms Chatrooms[]
 }
 
 model Recipes {
@@ -76,9 +76,8 @@ model Comment {
 model Chatrooms {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  users     String[]
-
   authorId  Int
+  guests    String[]
   author    User     @relation(fields: [authorId], references: [id])
 }
 
