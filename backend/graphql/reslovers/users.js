@@ -23,6 +23,7 @@ export default {
 						profile: true,
 						comments: true,
 						likes: true,
+						chatrooms: true,
 					}
 				})
 			} catch (error) {

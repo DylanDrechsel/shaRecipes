@@ -2,32 +2,9 @@ import db from '../../utils/generatePrisma.js';
 import checkAuth from '../../utils/check-auth.js';
 
 export default {
-    Query: {
-        getChatrooms : async (_, {}, context) => {
-            const user = await checkAuth(context)
-            // console.log('-----------------------------------------------------------------')
-            // console.log(db) //  gets returned but with no chatrooms
-            // console.log('-----------------------------------------------------------------')
-
-            try {
-                return await db.chatrooms.findMany({
-                    include: {
-                        author: true
-                    }
-                })
-            } catch (error) {
-                console.log('ERROR HIT', error)
-                throw new Error(error)
-            }
-        }
-    },
-
     Mutation: {
         createChatroom: async (_, {guests}, context) => {
             const user = await checkAuth(context)
-
-            console.log(guests)
-            // console.log(db)
 
             try {
                 return await db.chatrooms.create({
