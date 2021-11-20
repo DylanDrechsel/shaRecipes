@@ -5,6 +5,7 @@ export default {
     Query: {
         getChatrooms : async (_, {}, context) => {
             const user = await checkAuth(context)
+            console.log(db)
 
             try {
                 return await db.chatrooms.findMany({
@@ -13,6 +14,7 @@ export default {
                     }
                 })
             } catch (error) {
+                console.log('ERROR HIT', error)
                 throw new Error(error)
             }
         }
