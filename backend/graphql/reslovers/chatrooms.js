@@ -5,7 +5,9 @@ export default {
     Query: {
         getChatrooms : async (_, {}, context) => {
             const user = await checkAuth(context)
-            console.log(db)
+            // console.log('-----------------------------------------------------------------')
+            // console.log(db) //  gets returned but with no chatrooms
+            // console.log('-----------------------------------------------------------------')
 
             try {
                 return await db.chatrooms.findMany({
@@ -25,6 +27,7 @@ export default {
             const user = await checkAuth(context)
 
             console.log(guests)
+            // console.log(db)
 
             try {
                 return await db.chatrooms.create({
