@@ -26,9 +26,6 @@ export default {
         createChatroom: async (_, {guests}, context) => {
             const user = await checkAuth(context)
 
-            console.log(guests)
-            // console.log(db)
-
             try {
                 return await db.chatrooms.create({
                     data: {
