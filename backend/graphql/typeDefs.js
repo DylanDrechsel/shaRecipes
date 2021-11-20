@@ -67,6 +67,7 @@ const typeDefs = gql`
 		createdAt: Date
   		guests: [String]
 		author: User
+		chatroom: Chatrooms
 	}
 
 
