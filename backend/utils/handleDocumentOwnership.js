@@ -51,4 +51,22 @@ const handleCommentOwnership = async (userId, commentId) => {
     return false
 }
 
-export {handleDocumentOwnership, handleProfileOwnership, handleCommentOwnership}
+const handleChatroomOwnership = async (userId, chatroomId) => {
+    const document = await db.chatrooms.findUnique({
+        where: {
+            id: chatroomId
+        },
+        include: {
+            author: true
+        }
+    })
+
+    if (userId === document.author.id) {
+        return true
+    }
+
+    return false
+
+}
+
+export {handleDocumentOwnership, handleProfileOwnership, handleCommentOwnership, handleChatroomOwnership}

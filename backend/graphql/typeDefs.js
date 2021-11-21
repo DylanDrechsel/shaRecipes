@@ -83,12 +83,6 @@ const typeDefs = gql`
 		allRecipes: [Recipes]
 		allPublishedRecipes: [Recipes]
 		recipeById(recipeId: Int): Recipes
-
-		# PROFILE QUERIES
-		getUsersProfile: Profile
-
-		# CHATROOM QUERIES
-		getChatrooms: Chatrooms
 	}
 
 	type Mutation {
@@ -119,6 +113,7 @@ const typeDefs = gql`
 
 		# CHATROOM MUTATIONS
 		createChatroom(guests: [String]): Chatrooms
+		updateChatroom(chatroomId: Int, guests: [String]): Chatrooms
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
