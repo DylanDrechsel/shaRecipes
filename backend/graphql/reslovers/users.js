@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import hashPassword from '../../utils/passwordHashing.js';
 import generateToken from '../../utils/generateToken.js';
 import checkAuth from '../../utils/check-auth.js';
 import { UserInputError } from 'apollo-server-errors';
@@ -81,9 +82,7 @@ export default {
 					});
 				}
 
-				const salt = await bcrypt.genSalt(10);
-				const hash = await bcrypt.hash(password, salt);
-				password = hash;
+				password = await hashPassword(password)
 
 				return db.user.create({
 					data: {
