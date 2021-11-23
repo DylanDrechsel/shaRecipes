@@ -69,6 +69,7 @@ const typeDefs = gql`
   		guests: [String]
 		author: User
 		chatroom: Chatrooms
+		messages: Messages
 	}
 	
 	type Messages {
@@ -128,6 +129,9 @@ const typeDefs = gql`
 		createChatroom(guests: [String]): Chatrooms
 		updateChatroom(chatroomId: Int, guests: [String]): Chatrooms
 		deleteChatroom(chatroomId: Int): Chatrooms
+
+		# MESSAGES MUTATIONS
+		createMessage(chatroomId: Int, content: String): Messages
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
