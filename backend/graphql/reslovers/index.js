@@ -4,6 +4,7 @@ import likesResolvers from './likes.js'
 import commentsResolvers from './comments.js'
 import profileResolvers from './profile.js';
 import chatroomsResolvers from './chatrooms.js'
+import messagesResolvers from './messages.js'
 import GraphQLJSON from 'graphql-type-json';
 
 export default {
@@ -13,7 +14,8 @@ export default {
 		...likesResolvers.Query,
 		...commentsResolvers.Query,
 		...profileResolvers.Query,
-		...chatroomsResolvers.Query
+		...chatroomsResolvers.Query,
+		...messagesResolvers.Query,
 	},
 	Mutation: {
 		...usersResolvers.Mutation,
@@ -21,7 +23,8 @@ export default {
 		...likesResolvers.Mutation,
 		...commentsResolvers.Mutation,
 		...profileResolvers.Mutation,
-		...chatroomsResolvers.Mutation
+		...chatroomsResolvers.Mutation,
+		...messagesResolvers.Mutation,
 	},
 	JSON: GraphQLJSON,
 };
