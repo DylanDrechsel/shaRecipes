@@ -43,6 +43,25 @@ export default {
             } catch (error) {
                 throw new Error(error)
             }
+        },
+
+        deleteChatroom: async (_, { chatroomId }, context) => {
+            const user = await checkAuth(context)
+            const verified = await handleChatroomOwnership(user.id, chatroomId)
+
+            try {
+                if (verified === true) {
+                    return await db.chatrooms.delete({
+                        where: {
+                            id: chatroomId
+                        }
+                    })
+                } else {
+                    throw new Error('Not chatroom owner')
+                }
+            } catch (error) {
+                throw new Error(error)
+            }
         }
     }
 }

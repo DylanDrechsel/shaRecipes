@@ -114,6 +114,7 @@ const typeDefs = gql`
 		# CHATROOM MUTATIONS
 		createChatroom(guests: [String]): Chatrooms
 		updateChatroom(chatroomId: Int, guests: [String]): Chatrooms
+		deleteChatroom(chatroomId: Int): Chatrooms
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
