@@ -93,6 +93,9 @@ const typeDefs = gql`
 		allRecipes: [Recipes]
 		allPublishedRecipes: [Recipes]
 		recipeById(recipeId: Int): Recipes
+
+		# MESSAGES QUERIES
+		getMessagesForChatroom(chatroomId: Int): Messages
 	}
 
 	type Mutation {
