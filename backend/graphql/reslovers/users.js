@@ -174,6 +174,8 @@ export default {
 			}
 		},
 
+		/* DOESNT WORK ---- GOING TO FIX ONCE ALL OTHER ROUTES ARE DONE */
+		/* NEED TO ADD --- CHATROOMS --- MESSAGES --- */
 		deleteUser: async (_, {}, context) => {
 			const user = await checkAuth(context);
 			const userInformation = await db.user.findUnique({
