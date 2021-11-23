@@ -24,6 +24,7 @@ export default {
 						comments: true,
 						likes: true,
 						chatrooms: true,
+						messages: true
 					}
 				})
 			} catch (error) {

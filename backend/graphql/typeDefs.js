@@ -18,6 +18,7 @@ const typeDefs = gql`
 		comments: [Comment]
 		likes: [Likes]
 		chatrooms: [Chatrooms]
+		messages: [Messages]
 	}
 
 	type Recipes {
@@ -68,6 +69,15 @@ const typeDefs = gql`
   		guests: [String]
 		author: User
 		chatroom: Chatrooms
+	}
+	
+	type Messages {
+		id: ID
+		createAt: Date
+		content: String
+		author: User
+		chatroom: Chatrooms
+		# messages: Messages
 	}
 
 
