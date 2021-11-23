@@ -18,6 +18,7 @@ model User {
   chatrooms Chatrooms[]
   comments  Comment[]
   likes     Likes[]
+  messages  Messages[]
   profile   Profile?
   recipes   Recipes[]
 }
@@ -74,15 +75,20 @@ model Comment {
 }
 
 model Chatrooms {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
   authorId  Int
   guests    String[]
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User       @relation(fields: [authorId], references: [id])
+  messages  Messages[]
 }
 
 model Messages {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  content   String
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  content    String
+  authorId   Int
+  chatroomId Int
+  author     User      @relation(fields: [authorId], references: [id])
+  chatroom   Chatrooms @relation(fields: [chatroomId], references: [id])
 }
