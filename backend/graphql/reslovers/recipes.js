@@ -59,6 +59,7 @@ export default {
             }
         },
 
+        /* COMBINED INTO ONE ~~~~~~~~~~ START */
         allUsersPublishedRecipes: async (_, {}, context) => {
             const user = await checkAuth(context)
 
@@ -82,6 +83,7 @@ export default {
                 throw new Error(error)
             }
         }
+        /* COMBINED INTO ONE ~~~~~~~~~~ END */
 	},
 
     Mutation: {
