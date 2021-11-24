@@ -13,7 +13,6 @@ const handleDocumentOwnership = async (userId, recipeId) => {
     if (document.author.id === userId) {
         return true
     }
-
     return false
 }
 
@@ -30,7 +29,6 @@ const handleProfileOwnership = async (userId, profileId) => {
     if (profileId === document.profile.id && userId === document.id) {
         return true
     }
-
     return false
 }
 
@@ -47,7 +45,6 @@ const handleCommentOwnership = async (userId, commentId) => {
     if (userId === document.author.id) {
         return true
     }
-
     return false
 }
 
@@ -64,7 +61,6 @@ const handleChatroomOwnership = async (userId, chatroomId) => {
     if (userId === document.author.id) {
         return true
     }
-
     return false
 }
 

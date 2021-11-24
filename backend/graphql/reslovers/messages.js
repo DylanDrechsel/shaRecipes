@@ -31,8 +31,18 @@ export default {
             }
         },
 
-        /* deleteMessage: async (_, { messageId }, context) => {
+        deleteMessage: async (_, { messageId }, context) => {
             const user = await checkAuth(context)
-        } */
+
+            try {
+                return await db.messages.delete({
+                    where: {
+                        id: messageId
+                    }
+                })
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
     }
 }
