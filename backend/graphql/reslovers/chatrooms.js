@@ -13,7 +13,11 @@ export default {
                         id: chatroomId
                     },
                     include: {
-                        messages: true
+                        messages: {
+                            include: {
+                                author: true
+                            }
+                        }
                     }
                 })
             } catch (error) {
