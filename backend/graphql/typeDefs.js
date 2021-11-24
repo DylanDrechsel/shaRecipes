@@ -69,7 +69,7 @@ const typeDefs = gql`
   		guests: [String]
 		author: User
 		chatroom: Chatrooms
-		messages: Messages
+		messages: [Messages]
 	}
 	
 	type Messages {
@@ -77,6 +77,7 @@ const typeDefs = gql`
 		createAt: Date
 		content: String
 		author: User
+		# chatroomId: Int
 		chatroom: Chatrooms
 		# messages: Messages
 	}
@@ -95,8 +96,8 @@ const typeDefs = gql`
 		allPublishedRecipes: [Recipes]
 		recipeById(recipeId: Int): Recipes
 
-		# MESSAGES QUERIES
-		getMessagesForChatroom(chatroomId: Int): Messages
+		# CHATROOM QUERIES
+		getChatroomWithMessages(chatroomId: Int): Chatrooms
 	}
 
 	type Mutation {
