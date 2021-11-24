@@ -15,7 +15,7 @@ const handleDocumentOwnership = async (userId, recipeId) => {
     }
 
     return false
-};
+}
 
 const handleProfileOwnership = async (userId, profileId) => {
     const document = await db.user.findUnique({
@@ -66,7 +66,38 @@ const handleChatroomOwnership = async (userId, chatroomId) => {
     }
 
     return false
-
 }
 
-export {handleDocumentOwnership, handleProfileOwnership, handleCommentOwnership, handleChatroomOwnership}
+const handleIfGuestIsInChatroom = async (userId, chatroomId) => {
+    const user = await db.user.findUnique({
+        where: {
+            id: userId
+        }
+    })
+
+    const chatroom = await db.chatrooms.findUnique({
+        where: {
+            id: chatroomId
+        }
+    })
+
+    if (userId !== chatroom.authorId) {
+        guests.forEach(name => {
+            if (user.username === name) {
+                return true
+            } else {
+                throw new Error('Not a guest of the chatroom')
+            }
+        })
+    } else {
+        return true
+    }
+}
+
+export {
+    handleDocumentOwnership, 
+    handleProfileOwnership, 
+    handleCommentOwnership, 
+    handleChatroomOwnership,
+    handleIfGuestIsInChatroom
+}
