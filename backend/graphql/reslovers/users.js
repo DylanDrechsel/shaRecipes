@@ -25,7 +25,11 @@ export default {
 						comments: true,
 						likes: true,
 						chatrooms: true,
-						messages: true
+						messages: {
+							include: {
+								chatroom: true
+							}
+						}
 					}
 				})
 			} catch (error) {

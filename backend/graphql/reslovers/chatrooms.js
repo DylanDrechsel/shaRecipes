@@ -3,6 +3,25 @@ import checkAuth from '../../utils/check-auth.js';
 import { handleChatroomOwnership } from '../../utils/handleDocumentOwnership.js';
 
 export default {
+    Query: {
+        getChatroomWithMessages: async (_, { chatroomId }, context) => {
+            const user = await checkAuth(context)
+
+            try {
+                return await db.chatrooms.findUnique({
+                    where: {
+                        id: chatroomId
+                    },
+                    include: {
+                        messages: true
+                    }
+                })
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+    },
+
     Mutation: {
         createChatroom: async (_, { guests }, context) => {
             const user = await checkAuth(context)
