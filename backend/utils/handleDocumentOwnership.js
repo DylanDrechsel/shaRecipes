@@ -90,10 +90,28 @@ const handleIfGuestIsInChatroom = async (userId, chatroomId) => {
     }
 }
 
+const handleMessageOwnership = async (userId, messageId) => {
+    const message = await db.messages.findUnique({
+        where: {
+            id: messageId
+        }
+    })
+
+    if (userId === message.authorId) {
+        return true
+    }
+
+    throw new Error('Not message owner')
+}
+
+
+
+
 export {
     handleDocumentOwnership, 
     handleProfileOwnership, 
     handleCommentOwnership, 
     handleChatroomOwnership,
-    handleIfGuestIsInChatroom
+    handleIfGuestIsInChatroom,
+    handleMessageOwnership
 }
