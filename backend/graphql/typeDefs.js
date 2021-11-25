@@ -144,8 +144,9 @@ const typeDefs = gql`
 		createMessage(chatroomId: Int, content: String): Messages
 		deleteMessage(messageId: Int): Messages
 
-		# FAVORITERECIPES MUTATION
+		# FAVORITERECIPES MUTATIONS
 		createFavoriteRecipe(recipeId: Int): favoriteRecipes
+		deleteFavoriteRecipe(favoriteRecipeId: Int): favoriteRecipes
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
