@@ -97,12 +97,9 @@ const typeDefs = gql`
 	type Query {
 		# USER QUERIES
 		getUser: User
-		allUsersPublishedRecipes: [Recipes]
-		allUsersUnpublishedRecipes: [Recipes]
 
 		# RECIPES QUERIES
-		allRecipes: [Recipes]
-		allPublishedRecipes: [Recipes]
+		allRecipes(published: Boolean): [Recipes]
 		recipeById(recipeId: Int): Recipes
 
 		# CHATROOM QUERIES
