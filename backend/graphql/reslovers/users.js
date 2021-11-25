@@ -29,6 +29,11 @@ export default {
 							include: {
 								chatroom: true
 							}
+						},
+						favoriteRecipes: {
+							include: {
+								recipes: true
+							}
 						}
 					}
 				})

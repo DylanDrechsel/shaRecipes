@@ -35,7 +35,8 @@ const typeDefs = gql`
 		category: String
 		author: User
 		likes: [Likes]
-		comments: [Comment] 
+		comments: [Comment]
+		favoriteRecipes: [favoriteRecipes] 
 	}
 
 	type Likes {
@@ -142,6 +143,9 @@ const typeDefs = gql`
 		# MESSAGES MUTATIONS
 		createMessage(chatroomId: Int, content: String): Messages
 		deleteMessage(messageId: Int): Messages
+
+		# FAVORITERECIPES MUTATION
+		createFavoriteRecipe(recipeId: Int): favoriteRecipes
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
