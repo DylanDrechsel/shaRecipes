@@ -1,18 +1,18 @@
 import db from "../../utils/generatePrisma.js";
 import checkAuth from '../../utils/check-auth.js';
-import { handleDocumentOwnership } from '../../utils/handleDocumentOwnership.js'
+import { handleRecipeOwnership } from '../../utils/handleDocumentOwnership.js'
 import { UserInputError } from "apollo-server-errors";
 
 export default {
 	Query: {
-		/**
-		 * @param {} _
-		 * @param {Take: int, skip: int, myCursor: int} param1
-		 * @returns
-		 */
-		allRecipes: async (_) => {
+		allRecipes: async (_, { published }, context) => {
+            const user = await checkAuth(context)
+
 			try {
 				return await db.recipes.findMany({
+                    where: {
+                        published: published
+                    },
 					include: {
 						author: true,
 						likes: {
@@ -32,22 +32,6 @@ export default {
 			}
 		},
 
-        allPublishedRecipes: async (_) => {
-            try {
-                return await db.recipes.findMany({
-                    where: {
-                        published: true
-                    },
-                    include: {
-                        author: true,
-                        likes: true
-                    }
-                })
-            } catch (error) {
-                throw new Error(error);
-            }
-        },
-
         recipeById: async (_, { recipeId }) => {
             try {
                 return await db.recipes.findUnique({
@@ -58,32 +42,6 @@ export default {
                 throw new Error(error)
             }
         },
-
-        /* COMBINED INTO ONE ~~~~~~~~~~ START */
-        allUsersPublishedRecipes: async (_, {}, context) => {
-            const user = await checkAuth(context)
-
-            try {
-                return await db.recipes.findMany({
-                    where: { authorId: user.id, published: true },
-                })
-            } catch (error) {
-                throw new Error(error)
-            }
-        },
-
-        allUsersUnpublishedRecipes: async (_, {}, context) => {
-            const user = await checkAuth(context)
-
-            try {
-                return await db.recipes.findMany({ 
-                    where: { authorId: user.id, published: false }
-                })
-            } catch (error) {
-                throw new Error(error)
-            }
-        }
-        /* COMBINED INTO ONE ~~~~~~~~~~ END */
 	},
 
     Mutation: {
@@ -114,7 +72,7 @@ export default {
 
         updateRecipe: async (_, {recipeId, updateRecipe: { title, category, directions, content, ingredients }}, context) => {
             const user = await checkAuth(context) 
-            const verified = await handleDocumentOwnership(user.id, recipeId) 
+            const verified = await handleRecipeOwnership(user.id, recipeId) 
  
             try {
                 if (verified === true) {
@@ -140,7 +98,7 @@ export default {
         
         deleteRecipe: async (_, { recipeId }, context) => {
             const user = await checkAuth(context);
-			const verified = await handleDocumentOwnership(user.id, recipeId);
+			const verified = await handleRecipeOwnership(user.id, recipeId);
 
             try {
                 if (verified === true) {

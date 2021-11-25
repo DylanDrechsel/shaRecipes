@@ -1,6 +1,6 @@
 import db from './generatePrisma.js';
 
-const handleDocumentOwnership = async (userId, recipeId) => {
+const handleRecipeOwnership = async (userId, recipeId) => {
     const document = await db.recipes.findUnique({
         where: {
             id: recipeId
@@ -108,7 +108,7 @@ const handleMessageOwnership = async (userId, messageId) => {
 
 
 export {
-    handleDocumentOwnership, 
+    handleRecipeOwnership, 
     handleProfileOwnership, 
     handleCommentOwnership, 
     handleChatroomOwnership,
