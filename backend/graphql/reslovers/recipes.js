@@ -33,6 +33,8 @@ export default {
 		},
 
         recipeById: async (_, { recipeId }) => {
+            const user = await checkAuth(context)
+
             try {
                 return await db.recipes.findUnique({
                     where: { id: recipeId },
@@ -88,8 +90,6 @@ export default {
                             ingredients: ingredients
                         }
                     })
-                } else {
-                    throw new Error(`userId: ${user.id} --- does not equal document owner`)
                 }
             } catch (error) {
                 throw new Error(error)
@@ -107,8 +107,6 @@ export default {
                             id: recipeId
                         }
                     }) 
-                } else {
-                    throw new Error(`userId: ${user.id} --- does not equal document owner`)
                 }
             } catch (error) {
                 throw new Error(error);
