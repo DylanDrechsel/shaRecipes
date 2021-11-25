@@ -21,6 +21,7 @@ model User {
   messages  Messages[]
   profile   Profile?
   recipes   Recipes[]
+  favoriteRecipes favoriteRecipes[]
 }
 
 model Recipes {
@@ -40,6 +41,7 @@ model Recipes {
   author         User      @relation(fields: [authorId], references: [id])
   comments       Comment[]
   likes          Likes[]
+  favoriteRecipes favoriteRecipes[]
 }
 
 model Likes {
@@ -91,4 +93,13 @@ model Messages {
   chatroomId Int
   author     User      @relation(fields: [authorId], references: [id])
   chatroom   Chatrooms @relation(fields: [chatroomId], references: [id])
+}
+
+model favoriteRecipes {
+  id        Int        @id @default(autoincrement())
+  authorId  Int
+  recipeId  Int
+  createdAt DateTime   @default(now())
+  author    User       @relation(fields: [authorId], references: [id])
+  recipes   Recipes[]  @relation(fields: [recipeId], references: [id])
 }
