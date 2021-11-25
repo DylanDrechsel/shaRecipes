@@ -13,7 +13,8 @@ const handleRecipeOwnership = async (userId, recipeId) => {
     if (document.author.id === userId) {
         return true
     }
-    return false
+    
+    throw new Error('Not recipe owner')
 }
 
 const handleProfileOwnership = async (userId, profileId) => {
