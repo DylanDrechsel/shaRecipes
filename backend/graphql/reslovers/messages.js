@@ -1,6 +1,6 @@
 import db from '../../utils/generatePrisma.js'
 import checkAuth from '../../utils/check-auth.js'
-import { handleIfGuestIsInChatroom } from '../../utils/handleDocumentOwnership.js'
+import { handleIfGuestIsInChatroom, handleMessageOwnership } from '../../utils/handleDocumentOwnership.js'
 
 export default {
     Mutation: {
@@ -31,8 +31,21 @@ export default {
             }
         },
 
-        /* deleteMessage: async (_, { messageId }, context) => {
+        deleteMessage: async (_, { messageId }, context) => {
             const user = await checkAuth(context)
-        } */
+            const verified = await handleMessageOwnership(user.id, messageId)
+
+            try {
+                if (verified === true) {
+                    return await db.messages.delete({
+                        where: {
+                            id: messageId
+                        }
+                    })
+                }
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
     }
 }
