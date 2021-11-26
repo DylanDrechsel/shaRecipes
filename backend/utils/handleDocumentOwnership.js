@@ -30,7 +30,7 @@ const handleProfileOwnership = async (userId, profileId) => {
     if (profileId === document.profile.id && userId === document.id) {
         return true
     }
-    return false
+    throw new Error('Not profile owner')
 }
 
 const handleCommentOwnership = async (userId, commentId) => {

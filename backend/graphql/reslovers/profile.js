@@ -43,8 +43,6 @@ export default {
                         imageKey: imageKey,
                         }
                     })
-                } else {
-                    throw new Error('Not profile owner')
                 }
             } catch (error) {
                 throw new Error(error)
