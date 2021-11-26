@@ -46,7 +46,7 @@ const handleCommentOwnership = async (userId, commentId) => {
     if (userId === document.author.id) {
         return true
     }
-    return false
+    throw new Error('Not Comment Owner')
 }
 
 const handleChatroomOwnership = async (userId, chatroomId) => {

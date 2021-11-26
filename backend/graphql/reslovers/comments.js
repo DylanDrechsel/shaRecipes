@@ -43,8 +43,6 @@ export default {
                             content: content
                         }
                     })
-                } else {
-                    throw new Error('Not Comment Owner')
                 }
             } catch (error) {
                 throw new Error(error)
@@ -62,8 +60,6 @@ export default {
                             id: commentId
                         }
                     })
-                } else {
-                    throw new Error('Not Comment Owner')
                 }
             } catch (error) {
                 throw new Error(error)
