@@ -46,18 +46,24 @@ const handleCommentOwnership = async (userId, commentId) => {
     if (userId === comment.author.id) {
         return true
     }
-    throw new Error('Not Comment Owner')
+    throw new Error('Not comment Owner')
 }
 
-const handleLikeOwnership = (userId, likeId) => {
-    console.log(userId, likeId)
+const handleLikeOwnership = async (userId, likeId) => {
+    const like = await db.likes.findUnique({
+        where: {
+            id: likeId
+        },
+        include: {
+            author: true
+        }
+    })
 
-
-
-    console.log('Not like owner')
+    if (like.author.id === userId) {
+        return true
+    }
+    throw new Error('Not like owner')
 }
-
-console.log(handleLikeOwnership(1, 1))
 
 const handleChatroomOwnership = async (userId, chatroomId) => {
     const chatroom = await db.chatrooms.findUnique({
