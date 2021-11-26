@@ -1,7 +1,7 @@
 import db from './generatePrisma.js';
 
 const handleRecipeOwnership = async (userId, recipeId) => {
-    const document = await db.recipes.findUnique({
+    const recipe = await db.recipes.findUnique({
         where: {
             id: recipeId
          },
@@ -10,7 +10,7 @@ const handleRecipeOwnership = async (userId, recipeId) => {
         }
     })
 
-    if (document.author.id === userId) {
+    if (recipe.author.id === userId) {
         return true
     }
     
@@ -18,7 +18,7 @@ const handleRecipeOwnership = async (userId, recipeId) => {
 }
 
 const handleProfileOwnership = async (userId, profileId) => {
-    const document = await db.user.findUnique({
+    const user = await db.user.findUnique({
         where: {
             id: userId
         },
@@ -27,14 +27,14 @@ const handleProfileOwnership = async (userId, profileId) => {
         }
     })
 
-    if (profileId === document.profile.id && userId === document.id) {
+    if (profileId === user.profile.id && userId === user.id) {
         return true
     }
     throw new Error('Not profile owner')
 }
 
 const handleCommentOwnership = async (userId, commentId) => {
-    const document = await db.comment.findUnique({
+    const comment = await db.comment.findUnique({
         where: {
             id: commentId
         },
@@ -43,14 +43,30 @@ const handleCommentOwnership = async (userId, commentId) => {
         }
     })
 
-    if (userId === document.author.id) {
+    if (userId === comment.author.id) {
         return true
     }
-    throw new Error('Not Comment Owner')
+    throw new Error('Not comment Owner')
+}
+
+const handleLikeOwnership = async (userId, likeId) => {
+    const like = await db.likes.findUnique({
+        where: {
+            id: likeId
+        },
+        include: {
+            author: true
+        }
+    })
+
+    if (like.author.id === userId) {
+        return true
+    }
+    throw new Error('Not like owner')
 }
 
 const handleChatroomOwnership = async (userId, chatroomId) => {
-    const document = await db.chatrooms.findUnique({
+    const chatroom = await db.chatrooms.findUnique({
         where: {
             id: chatroomId
         },
@@ -59,7 +75,7 @@ const handleChatroomOwnership = async (userId, chatroomId) => {
         }
     })
 
-    if (userId === document.author.id) {
+    if (userId === chatroom.author.id) {
         return true
     }
     throw new Error('Not chatroom owner')
@@ -110,7 +126,8 @@ const handleMessageOwnership = async (userId, messageId) => {
 export {
     handleRecipeOwnership, 
     handleProfileOwnership, 
-    handleCommentOwnership, 
+    handleCommentOwnership,
+    handleLikeOwnership, 
     handleChatroomOwnership,
     handleIfGuestIsInChatroom,
     handleMessageOwnership

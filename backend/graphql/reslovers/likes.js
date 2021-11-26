@@ -1,6 +1,6 @@
 import db from '../../utils/generatePrisma.js'
 import checkAuth from '../../utils/check-auth.js'
-import { UserInputError } from 'apollo-server-core'
+import { handleLikeOwnership } from '../../utils/handleDocumentOwnership.js'
 
 export default {
     Mutation: {
@@ -48,6 +48,7 @@ export default {
 
         updateLike: async (_, { likeId }, context) => {
             const user = await checkAuth(context)
+            const verified = await handleLikeOwnership(user.id, likeId)
 
             const like = await db.likes.findUnique({
                 where: {

@@ -1,7 +1,6 @@
 import db from "../../utils/generatePrisma.js";
 import checkAuth from '../../utils/check-auth.js';
 import { handleRecipeOwnership } from '../../utils/handleDocumentOwnership.js'
-import { UserInputError } from "apollo-server-errors";
 
 export default {
 	Query: {
