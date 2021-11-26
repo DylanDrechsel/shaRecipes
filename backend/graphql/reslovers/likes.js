@@ -1,6 +1,5 @@
 import db from '../../utils/generatePrisma.js'
 import checkAuth from '../../utils/check-auth.js'
-import { UserInputError } from 'apollo-server-core'
 
 export default {
     Mutation: {
