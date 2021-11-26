@@ -65,6 +65,32 @@ const handleLikeOwnership = async (userId, likeId) => {
     throw new Error('Not like owner')
 }
 
+const handleToLikeOrUnLike = async (likeId) => {
+    const like = await db.likes.findUnique({
+        where: {
+            id: likeId
+        },
+        include: {
+            author: true,
+            recipe: true
+        }
+    })
+    let totalLikeValue = like.recipe.totalLikeValue
+    const recipeId = like.recipe.id
+
+    
+    if (like.like === true) {
+        const likeBool = false
+        totalLikeValue -= 1
+        return { likeBool, totalLikeValue, recipeId }
+    } else if (like.like === false) {
+        const likeBool = true
+        totalLikeValue += 1
+        return { likeBool, totalLikeValue, recipeId }
+    }
+    throw new Error('like is neither true or false')
+}
+
 const handleChatroomOwnership = async (userId, chatroomId) => {
     const chatroom = await db.chatrooms.findUnique({
         where: {
@@ -127,7 +153,8 @@ export {
     handleRecipeOwnership, 
     handleProfileOwnership, 
     handleCommentOwnership,
-    handleLikeOwnership, 
+    handleLikeOwnership,
+    handleToLikeOrUnLike, 
     handleChatroomOwnership,
     handleIfGuestIsInChatroom,
     handleMessageOwnership

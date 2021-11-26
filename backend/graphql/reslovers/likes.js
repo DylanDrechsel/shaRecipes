@@ -1,6 +1,6 @@
 import db from '../../utils/generatePrisma.js'
 import checkAuth from '../../utils/check-auth.js'
-import { handleLikeOwnership } from '../../utils/handleDocumentOwnership.js'
+import { handleLikeOwnership, handleToLikeOrUnLike } from '../../utils/handleDocumentOwnership.js'
 
 export default {
     Mutation: {
@@ -49,58 +49,27 @@ export default {
         updateLike: async (_, { likeId }, context) => {
             const user = await checkAuth(context)
             const verified = await handleLikeOwnership(user.id, likeId)
-
-            const like = await db.likes.findUnique({
-                where: {
-                    id: likeId
-                },
-                include: {
-                    author: true,
-                    recipe: true
-                }
-            })
+            const likeInformation = await handleToLikeOrUnLike(likeId)
 
             try {
-                if (like.author.id === user.id) {
-                    if (like.like === true) {
-                        await db.recipes.update({
-                            where: {
-                                id: like.recipe.id
-                            },
-                            data: {
-                                totalLikeValue: like.recipe.totalLikeValue - 1
-                            }
-                        })
+                if (verified === true) {
+                    await db.recipes.update({
+                        where: {
+                            id: likeInformation.recipeId
+                        },
+                        data: {
+                            totalLikeValue: likeInformation.totalLikeValue
+                        }
+                    })
 
-                        return await db.likes.update({
-                            where: {
-                                id: likeId
-                            },
-                            data: {
-                                like: false
-                            }
-                        })
-                    } else if (like.like === false) {
-                        await db.recipes.update({
-                            where: {
-                                id: like.recipe.id
-                            },
-                            data: {
-                                totalLikeValue: like.recipe.totalLikeValue + 1
-                            }
-                        })
-
-                        return await db.likes.update({
-                            where: {
-                                id: likeId
-                            },
-                            data: {
-                                like: true
-                            }
-                        })
-                    }
-                } else {
-                    throw new Error('author.id on document does not equal user.id')
+                    return await db.likes.update({
+                        where: {
+                            id: likeId
+                        },
+                        data: {
+                            like: likeInformation.likeBool
+                        }
+                    })
                 }
             } catch (error) {
                 throw new Error(error)
