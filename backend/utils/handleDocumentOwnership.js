@@ -62,7 +62,7 @@ const handleChatroomOwnership = async (userId, chatroomId) => {
     if (userId === document.author.id) {
         return true
     }
-    return false
+    throw new Error('Not chatroom owner')
 }
 
 const handleIfGuestIsInChatroom = async (userId, chatroomId) => {
@@ -101,7 +101,6 @@ const handleMessageOwnership = async (userId, messageId) => {
     if (userId === message.authorId) {
         return true
     }
-
     throw new Error('Not message owner')
 }
 
