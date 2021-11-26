@@ -60,8 +60,6 @@ export default {
                             guests: [ ...guests ]
                         }
                     })
-                } else {
-                    throw new Error('Not chatroom owner')
                 }
             } catch (error) {
                 throw new Error(error)
@@ -79,8 +77,6 @@ export default {
                             id: chatroomId
                         }
                     })
-                } else {
-                    throw new Error('Not chatroom owner')
                 }
             } catch (error) {
                 throw new Error(error)
