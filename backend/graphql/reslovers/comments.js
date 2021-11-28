@@ -9,7 +9,7 @@ export default {
             const user = await checkAuth(context)
 
             try {
-                return await db.comment.create({
+                return await db.comments.create({
                     data: {
                         content: content,
                         author: {
