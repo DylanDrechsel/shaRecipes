@@ -100,7 +100,7 @@ CREATE TABLE "FavoriteRecipes" (
 CREATE TABLE "FollowedUsers" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "followUsernane" TEXT NOT NULL,
+    "followUsername" TEXT NOT NULL,
     "fallowedUserId" INTEGER NOT NULL,
     "authorId" INTEGER NOT NULL,
 

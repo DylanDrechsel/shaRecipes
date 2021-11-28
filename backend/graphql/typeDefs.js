@@ -20,6 +20,7 @@ const typeDefs = gql`
 		chatrooms: [Chatrooms]
 		messages: [Messages]
 		favoriteRecipes: [FavoriteRecipes]
+		followedUsers: [FollowedUsers]
 	}
 
 	type Recipes {
@@ -76,19 +77,25 @@ const typeDefs = gql`
 	
 	type Messages {
 		id: ID
-		createAt: Date
+		createdAt: Date
 		content: String
 		author: User
 		chatroom: Chatrooms
-		# chatroomId: Int
-		# messages: Messages
 	}
 
 	type FavoriteRecipes {
 		id: ID
-		createAt: Date
+		createdAt: Date
 		author: User
 		recipes: [Recipes]
+	}
+
+	type FollowedUsers {
+		id: ID
+		createdAt: Date
+		followedUsername: String
+		followedUserId:	Int
+		author: User
 	}
 
 
