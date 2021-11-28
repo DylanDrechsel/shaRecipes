@@ -1,4 +1,3 @@
-
 import db from '../../utils/generatePrisma.js';
 import checkAuth from '../../utils/check-auth.js';
 import { handleCommentOwnership } from '../../utils/handleDocumentOwnership.js';

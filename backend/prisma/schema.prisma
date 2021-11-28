@@ -108,8 +108,8 @@ model FavoriteRecipes {
 model FollowedUsers {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  followUsername  String
-  fallowedUserId  Int
+  followedUsername  String
+  followedUserId  Int
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
 }
