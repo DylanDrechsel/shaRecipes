@@ -19,7 +19,7 @@ const typeDefs = gql`
 		likes: [Likes]
 		chatrooms: [Chatrooms]
 		messages: [Messages]
-		favoriteRecipes: [favoriteRecipes]
+		favoriteRecipes: [FavoriteRecipes]
 	}
 
 	type Recipes {
@@ -36,7 +36,7 @@ const typeDefs = gql`
 		author: User
 		likes: [Likes]
 		comments: [Comments]
-		favoriteRecipes: [favoriteRecipes] 
+		favoriteRecipes: [FavoriteRecipes] 
 	}
 
 	type Likes {
@@ -84,7 +84,7 @@ const typeDefs = gql`
 		# messages: Messages
 	}
 
-	type favoriteRecipes {
+	type FavoriteRecipes {
 		id: ID
 		createAt: Date
 		author: User
@@ -142,8 +142,8 @@ const typeDefs = gql`
 		deleteMessage(messageId: Int): Messages
 
 		# FAVORITERECIPES MUTATIONS
-		createFavoriteRecipe(recipeId: Int): favoriteRecipes
-		deleteFavoriteRecipe(favoriteRecipeId: Int): favoriteRecipes
+		createFavoriteRecipe(recipeId: Int): FavoriteRecipes
+		deleteFavoriteRecipe(favoriteRecipeId: Int): FavoriteRecipes
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
