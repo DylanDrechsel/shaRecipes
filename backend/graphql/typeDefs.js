@@ -151,6 +151,9 @@ const typeDefs = gql`
 		# FAVORITERECIPES MUTATIONS
 		createFavoriteRecipe(recipeId: Int): FavoriteRecipes
 		deleteFavoriteRecipe(favoriteRecipeId: Int): FavoriteRecipes
+
+		# FOLLOWEDUSERS MUTATION
+		createFollowedUser(followedUserId: Int, followedUsername: String): FollowedUsers
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
