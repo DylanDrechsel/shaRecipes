@@ -34,7 +34,7 @@ const handleProfileOwnership = async (userId, profileId) => {
 }
 
 const handleCommentOwnership = async (userId, commentId) => {
-    const comment = await db.comment.findUnique({
+    const comment = await db.comments.findUnique({
         where: {
             id: commentId
         },

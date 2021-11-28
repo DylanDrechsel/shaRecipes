@@ -35,7 +35,7 @@ export default {
 
             try {
                 if (verfied === true) {
-                    return await db.comment.update({
+                    return await db.comments.update({
                         where: {
                             id: commentId
                         },
@@ -55,7 +55,7 @@ export default {
 
             try {
                 if (verfied === true) {
-                    return await db.comment.delete({
+                    return await db.comments.delete({
                         where: {
                             id: commentId
                         }

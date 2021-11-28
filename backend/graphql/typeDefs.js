@@ -15,11 +15,12 @@ const typeDefs = gql`
 		password: String
 		recipes: [Recipes]
 		profile: Profile
-		comments: [Comment]
+		comments: [Comments]
 		likes: [Likes]
 		chatrooms: [Chatrooms]
 		messages: [Messages]
-		favoriteRecipes: [favoriteRecipes]
+		favoriteRecipes: [FavoriteRecipes]
+		followedUsers: [FollowedUsers]
 	}
 
 	type Recipes {
@@ -35,8 +36,8 @@ const typeDefs = gql`
 		category: String
 		author: User
 		likes: [Likes]
-		comments: [Comment]
-		favoriteRecipes: [favoriteRecipes] 
+		comments: [Comments]
+		favoriteRecipes: [FavoriteRecipes] 
 	}
 
 	type Likes {
@@ -57,7 +58,7 @@ const typeDefs = gql`
 		author: User
 	}
 
-	type Comment {
+	type Comments {
 		id: ID
 		createdAt: Date
 		content: String
@@ -76,19 +77,25 @@ const typeDefs = gql`
 	
 	type Messages {
 		id: ID
-		createAt: Date
+		createdAt: Date
 		content: String
 		author: User
 		chatroom: Chatrooms
-		# chatroomId: Int
-		# messages: Messages
 	}
 
-	type favoriteRecipes {
+	type FavoriteRecipes {
 		id: ID
-		createAt: Date
+		createdAt: Date
 		author: User
 		recipes: [Recipes]
+	}
+
+	type FollowedUsers {
+		id: ID
+		createdAt: Date
+		followedUsername: String
+		followedUserId:	Int
+		author: User
 	}
 
 
@@ -123,9 +130,9 @@ const typeDefs = gql`
 		updateLike(likeId: Int): Likes
 
 		# COMMENT MUTATIONS
-		createComment(recipeId: Int, content: String): Comment
-		updateComment(commentId: Int, content: String): Comment
-		deleteComment(commentId: Int): Comment
+		createComment(recipeId: Int, content: String): Comments
+		updateComment(commentId: Int, content: String): Comments
+		deleteComment(commentId: Int): Comments
 
 		# PROFILE MUTATIONS
 		createProfile(profileInput: ProfileInput): Profile
@@ -142,8 +149,8 @@ const typeDefs = gql`
 		deleteMessage(messageId: Int): Messages
 
 		# FAVORITERECIPES MUTATIONS
-		createFavoriteRecipe(recipeId: Int): favoriteRecipes
-		deleteFavoriteRecipe(favoriteRecipeId: Int): favoriteRecipes
+		createFavoriteRecipe(recipeId: Int): FavoriteRecipes
+		deleteFavoriteRecipe(favoriteRecipeId: Int): FavoriteRecipes
 	}
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------

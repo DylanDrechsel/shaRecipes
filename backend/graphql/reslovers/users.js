@@ -34,7 +34,8 @@ export default {
 							include: {
 								recipes: true
 							}
-						}
+						},
+						followedUsers: true
 					}
 				})
 			} catch (error) {
