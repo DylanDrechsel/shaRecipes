@@ -19,7 +19,20 @@ export default {
                     }
                 })
             } catch (error) {
-                console.log(error)
+                throw new Error(error)
+            }
+        },
+
+        deleteFollowedUser: async (_, { followedUserId }, context) => {
+            const user = await checkAuth(context)
+
+            try {
+                return await db.followedUsers.delete({
+                    where: {
+                        id: followedUserId
+                    }
+                })
+            } catch (error) {
                 throw new Error(error)
             }
         }
