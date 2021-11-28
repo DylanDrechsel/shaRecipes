@@ -6,6 +6,7 @@ import profileResolvers from './profile.js';
 import chatroomsResolvers from './chatrooms.js'
 import messagesResolvers from './messages.js'
 import favoriteRecipes from './favoriteRecipes.js';
+import followedUsers from './followedUsers.js';
 import GraphQLJSON from 'graphql-type-json';
 
 export default {
@@ -18,6 +19,7 @@ export default {
 		...chatroomsResolvers.Query,
 		...messagesResolvers.Query,
 		...favoriteRecipes.Query,
+		...followedUsers.Query
 	},
 	Mutation: {
 		...usersResolvers.Mutation,
@@ -28,6 +30,7 @@ export default {
 		...chatroomsResolvers.Mutation,
 		...messagesResolvers.Mutation,
 		...favoriteRecipes.Mutation,
+		...followedUsers.Mutation
 	},
 	JSON: GraphQLJSON,
 };
