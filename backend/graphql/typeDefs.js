@@ -154,7 +154,8 @@ const typeDefs = gql`
 
 		# FOLLOWEDUSERS MUTATION
 		createFollowedUser(followedUserId: Int, followedUsername: String): FollowedUsers
-	}
+		deleteFollowedUser(followedUserId: Int): FollowedUsers
+	}	
 
 	# ---------------------------------------- END QUERY & MUTATIONS ----------------------------------------
 
