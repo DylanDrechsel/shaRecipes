@@ -15,7 +15,7 @@ const typeDefs = gql`
 		password: String
 		recipes: [Recipes]
 		profile: Profile
-		comments: [Comment]
+		comments: [Comments]
 		likes: [Likes]
 		chatrooms: [Chatrooms]
 		messages: [Messages]
@@ -35,7 +35,7 @@ const typeDefs = gql`
 		category: String
 		author: User
 		likes: [Likes]
-		comments: [Comment]
+		comments: [Comments]
 		favoriteRecipes: [favoriteRecipes] 
 	}
 
@@ -57,7 +57,7 @@ const typeDefs = gql`
 		author: User
 	}
 
-	type Comment {
+	type Comments {
 		id: ID
 		createdAt: Date
 		content: String
@@ -123,9 +123,9 @@ const typeDefs = gql`
 		updateLike(likeId: Int): Likes
 
 		# COMMENT MUTATIONS
-		createComment(recipeId: Int, content: String): Comment
-		updateComment(commentId: Int, content: String): Comment
-		deleteComment(commentId: Int): Comment
+		createComment(recipeId: Int, content: String): Comments
+		updateComment(commentId: Int, content: String): Comments
+		deleteComment(commentId: Int): Comments
 
 		# PROFILE MUTATIONS
 		createProfile(profileInput: ProfileInput): Profile

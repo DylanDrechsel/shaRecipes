@@ -9,39 +9,41 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  firstname String?
-  lastname  String?
-  username  String      @unique
-  email     String      @unique
-  password  String
-  chatrooms Chatrooms[]
-  comments  Comment[]
-  likes     Likes[]
-  messages  Messages[]
-  profile   Profile?
-  recipes   Recipes[]
-  favoriteRecipes favoriteRecipes[]
+  id              Int               @id @default(autoincrement())
+  firstname       String?
+  lastname        String?
+  username        String            @unique
+  email           String            @unique
+  password        String
+  chatrooms       Chatrooms[]
+  comments        Comments[]
+  favoriteRecipes FavoriteRecipes[]
+  followedUsers   FollowedUsers[]
+  likes           Likes[]
+  messages        Messages[]
+  profile         Profile?
+  recipes         Recipes[]
 }
 
 model Recipes {
-  id             Int       @id @default(autoincrement())
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now())
-  title          String
-  totalLikeValue Int       @default(0)
-  content        String?
-  ingredients    Json
-  directions     Json
-  published      Boolean   @default(true)
-  category       String
-  authorId       Int
-  imageUrl       String?
-  imageKey       String?
-  author         User      @relation(fields: [authorId], references: [id])
-  comments       Comment[]
-  likes          Likes[]
-  favoriteRecipes favoriteRecipes[]
+  id                                                Int               @id @default(autoincrement())
+  createdAt                                         DateTime          @default(now())
+  updatedAt                                         DateTime          @default(now())
+  title                                             String
+  totalLikeValue                                    Int               @default(0)
+  content                                           String?
+  ingredients                                       Json
+  directions                                        Json
+  published                                         Boolean           @default(true)
+  category                                          String
+  authorId                                          Int
+  imageUrl                                          String?
+  imageKey                                          String?
+  author                                            User              @relation(fields: [authorId], references: [id])
+  comments                                          Comments[]
+  FavoriteRecipes_FavoriteRecipes_recipeIdToRecipes FavoriteRecipes[] @relation("FavoriteRecipes_recipeIdToRecipes")
+  likes                                             Likes[]
+  FavoriteRecipes_FavoriteRecipesToRecipes          FavoriteRecipes[]
 }
 
 model Likes {
@@ -65,7 +67,7 @@ model Profile {
   author   User    @relation(fields: [authorId], references: [id])
 }
 
-model Comment {
+model Comments {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -95,11 +97,21 @@ model Messages {
   chatroom   Chatrooms @relation(fields: [chatroomId], references: [id])
 }
 
-model favoriteRecipes {
-  id        Int        @id @default(autoincrement())
-  authorId  Int
-  recipeId  Int
-  createdAt DateTime   @default(now())
-  author    User       @relation(fields: [authorId], references: [id])
-  recipes   Recipes[]  @relation(fields: [recipeId], references: [id])
+model FavoriteRecipes {
+  id                                        Int       @id @default(autoincrement())
+  authorId                                  Int
+  recipeId                                  Int
+  createdAt                                 DateTime  @default(now())
+  author                                    User      @relation(fields: [authorId], references: [id])
+  Recipes_FavoriteRecipes_recipeIdToRecipes Recipes   @relation("FavoriteRecipes_recipeIdToRecipes", fields: [recipeId], references: [id])
+  Recipes_FavoriteRecipesToRecipes          Recipes[]
+}
+
+model FollowedUsers {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  followUsernane String
+  fallowedUserId Int
+  authorId       Int
+  author         User     @relation(fields: [authorId], references: [id])
 }

@@ -54,7 +54,7 @@ CREATE TABLE "Profile" (
 );
 
 -- CreateTable
-CREATE TABLE "Comment" (
+CREATE TABLE "Comments" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE "Comment" (
     "authorId" INTEGER NOT NULL,
     "postId" INTEGER,
 
-    CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -87,17 +87,28 @@ CREATE TABLE "Messages" (
 );
 
 -- CreateTable
-CREATE TABLE "favoriteRecipes" (
+CREATE TABLE "FavoriteRecipes" (
     "id" SERIAL NOT NULL,
     "authorId" INTEGER NOT NULL,
     "recipeId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "favoriteRecipes_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "FavoriteRecipes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "_RecipesTofavoriteRecipes" (
+CREATE TABLE "FollowedUsers" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "followUsernane" TEXT NOT NULL,
+    "fallowedUserId" INTEGER NOT NULL,
+    "authorId" INTEGER NOT NULL,
+
+    CONSTRAINT "FollowedUsers_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_FavoriteRecipesToRecipes" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -112,10 +123,10 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "Profile_authorId_key" ON "Profile"("authorId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_RecipesTofavoriteRecipes_AB_unique" ON "_RecipesTofavoriteRecipes"("A", "B");
+CREATE UNIQUE INDEX "_FavoriteRecipesToRecipes_AB_unique" ON "_FavoriteRecipesToRecipes"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_RecipesTofavoriteRecipes_B_index" ON "_RecipesTofavoriteRecipes"("B");
+CREATE INDEX "_FavoriteRecipesToRecipes_B_index" ON "_FavoriteRecipesToRecipes"("B");
 
 -- AddForeignKey
 ALTER TABLE "Recipes" ADD CONSTRAINT "Recipes_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -130,10 +141,10 @@ ALTER TABLE "Likes" ADD CONSTRAINT "Likes_postId_fkey" FOREIGN KEY ("postId") RE
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Recipes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Recipes"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Chatrooms" ADD CONSTRAINT "Chatrooms_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -145,13 +156,16 @@ ALTER TABLE "Messages" ADD CONSTRAINT "Messages_authorId_fkey" FOREIGN KEY ("aut
 ALTER TABLE "Messages" ADD CONSTRAINT "Messages_chatroomId_fkey" FOREIGN KEY ("chatroomId") REFERENCES "Chatrooms"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "favoriteRecipes" ADD CONSTRAINT "favoriteRecipes_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FavoriteRecipes" ADD CONSTRAINT "FavoriteRecipes_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "favoriteRecipes" ADD CONSTRAINT "favoriteRecipes_recipeId_fkey" FOREIGN KEY ("recipeId") REFERENCES "Recipes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FavoriteRecipes" ADD CONSTRAINT "FavoriteRecipes_recipeId_fkey" FOREIGN KEY ("recipeId") REFERENCES "Recipes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_RecipesTofavoriteRecipes" ADD FOREIGN KEY ("A") REFERENCES "Recipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "FollowedUsers" ADD CONSTRAINT "FollowedUsers_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_RecipesTofavoriteRecipes" ADD FOREIGN KEY ("B") REFERENCES "favoriteRecipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_FavoriteRecipesToRecipes" ADD FOREIGN KEY ("A") REFERENCES "FavoriteRecipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_FavoriteRecipesToRecipes" ADD FOREIGN KEY ("B") REFERENCES "Recipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
