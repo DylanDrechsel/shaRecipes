@@ -1,4 +1,5 @@
 import favoriteRecipes from '../graphql/reslovers/favoriteRecipes.js';
+import followedUsers from '../graphql/reslovers/followedUsers.js';
 import db from './generatePrisma.js';
 
 const handleRecipeOwnership = async (userId, recipeId) => {
@@ -160,6 +161,21 @@ const handleFavoriteRecipeOwnership = async (userId, favoriteRecipeId) => {
     throw new Error('Not account owner')
 }
 
+const handleFollowedUserOwnership = async (userId, followedUsersId) => {
+    const followedUser = await db.followedUsers.findUnique({
+        where: {
+            id: followedUsersId
+        }
+    })
+
+    if (userId === followedUser.authorId) {
+        return true
+    }
+    throw new Error('Not account owner')
+}
+
+// console.log(handleFollowedUserOwnership(1, 1))
+
 
 export {
     handleRecipeOwnership, 
@@ -170,5 +186,6 @@ export {
     handleChatroomOwnership,
     handleIfGuestIsInChatroom,
     handleMessageOwnership,
-    handleFavoriteRecipeOwnership
+    handleFavoriteRecipeOwnership,
+    handleFollowedUserOwnership
 }
