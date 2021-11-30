@@ -104,6 +104,7 @@ const typeDefs = gql`
 	type Query {
 		# USER QUERIES
 		getUser: User
+		getUserById(userId: Int): User
 
 		# RECIPES QUERIES
 		allRecipes(published: Boolean): [Recipes]
@@ -172,6 +173,7 @@ const typeDefs = gql`
 		username: String
 		firstname: String
 		lastname: String
+		password: String
 	}
 
 	input RecipeInput {

@@ -174,9 +174,6 @@ const handleFollowedUserOwnership = async (userId, followedUsersId) => {
     throw new Error('Not account owner')
 }
 
-// console.log(handleFollowedUserOwnership(1, 1))
-
-
 export {
     handleRecipeOwnership, 
     handleProfileOwnership, 
