@@ -1,8 +1,8 @@
 import db from '../../utils/generatePrisma.js'
 import checkAuth from '../../utils/check-auth.js'
+import { handleFavoriteRecipeOwnership } from '../../utils/handleDocumentOwnership.js'
 
 export default {
-    /* STOP USER FROM FAVORITING THE SAME RECIPE TWICE */
     Mutation: {
         createFavoriteRecipe: async (_, { recipeId }, context) => {
             const user = await checkAuth(context)
@@ -49,13 +49,16 @@ export default {
 
         deleteFavoriteRecipe: async (_, { favoriteRecipeId }, context) => {
             const user = checkAuth(context)
+            const verified = await handleFavoriteRecipeOwnership(user.id, favoriteRecipeId)
 
             try {
-                return await db.favoriteRecipes.delete({
-                    where: {
-                        id: favoriteRecipeId
-                    }
-                })
+                if (verified === true) {
+                    return await db.favoriteRecipes.delete({
+                        where: {
+                            id: favoriteRecipeId
+                        }
+                    })
+                }
             } catch (error) {
                 throw new Error(error)
             }
