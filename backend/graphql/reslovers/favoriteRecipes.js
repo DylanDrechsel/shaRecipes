@@ -7,6 +7,25 @@ export default {
         createFavoriteRecipe: async (_, { recipeId }, context) => {
             const user = await checkAuth(context)
 
+            const userInformation = await db.user.findUnique({
+                where: {
+                    id: user.id
+                },
+                include: {
+                    favoriteRecipes: true
+                }
+            })
+
+            const checking = (favoriteRecipes) => {
+                favoriteRecipes.forEach(recipe => {
+                    if (recipeId === recipe.recipeId) {
+                        throw new Error('Already saved this recipe')
+                    }
+                })
+            }
+
+            await checking(userInformation.favoriteRecipes)
+
             try {
                 return await db.favoriteRecipes.create({
                     data: {

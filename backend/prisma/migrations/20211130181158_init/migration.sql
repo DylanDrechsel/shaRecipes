@@ -100,8 +100,8 @@ CREATE TABLE "FavoriteRecipes" (
 CREATE TABLE "FollowedUsers" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "followUsername" TEXT NOT NULL,
-    "fallowedUserId" INTEGER NOT NULL,
+    "followedUsername" TEXT NOT NULL,
+    "followedUserId" INTEGER NOT NULL,
     "authorId" INTEGER NOT NULL,
 
     CONSTRAINT "FollowedUsers_pkey" PRIMARY KEY ("id")
