@@ -41,6 +41,38 @@ export default {
 			} catch (error) {
 				throw new Error(error)
 			}
+		},
+
+		getUserById: async (_, { userId }, context) => {
+			const user = await checkAuth(context)
+
+			try {
+				return await db.user.findUnique({
+					where: {
+						id: userId
+					},
+					include: {
+						recipes: true,
+						profile: true,
+						comments: true,
+						likes: true,
+						chatrooms: true,
+						messages: {
+							include: {
+								chatroom: true
+							}
+						},
+						favoriteRecipes: {
+							include: {
+								recipes: true
+							}
+						},
+						followedUsers: true
+					}
+				})
+			} catch (error) {
+				throw new Error(error)
+			}
 		}
 	},
 
@@ -139,26 +171,12 @@ export default {
 		},
 
 		/* ADD PASSWORD HASHING FOR WHEN A USER UPDATES THEIR PASSWORD ALSO */
-		updateUser: async (_, { updateUser: { email, username, firstname, lastname } }, context) => {
-			const user = checkAuth(context);
-			/* let request = {
-				email: email,
-				username: username,
-				firstname: firstname,
-				lastname: lastname
+		updateUser: async (_, { updateUser: { email, username, firstname, lastname, password } }, context) => {
+			const user = await checkAuth(context);
+			
+			if (password !== undefined || password !== null) {
+				password = await hashPassword(password)
 			}
-
-			const foundUser = await db.user.findUnique({
-				where: {
-					id: user.id
-				},
-			});
-
-			for await ( const [key, value] of Object.entries(request) ) {
-				if (value === null) {
-					request[key] = foundUser[key]
-				}
-			} */
 			
             try {
 				if (!user) {
@@ -168,12 +186,12 @@ export default {
 
 				const newUser = await db.user.update({
 					where: { id: user.id },
-					// data: { ...request }
 					data: {
 						email: email,
 						username: username,
 						firstname: firstname,
-						lastname: lastname
+						lastname: lastname,
+						password: password
 					}
 				});
 
