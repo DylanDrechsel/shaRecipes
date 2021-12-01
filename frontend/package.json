@@ -6,12 +6,19 @@
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@apollo/client": "^3.3.21",
+    "apollo-link-http": "1.5.17",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.3",
+    "graphql": "^15.5.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.0.3",
     "react-dom": "^17.0.2",
-    "web-vitals": "^1.1.2"
-  },
-  "devDependencies": {
-    "react-scripts": "^0.9.5"
+    "react-router-dom": "^6.0.2",
+    "react-scripts": "4.0.3",
+    "recoil": "^0.3.1",
+    "web-vitals": "^1.1.2",
+    "undefined": "@apollo/client/link/context"
   },
   "scripts": {
     "start": "react-scripts start",
