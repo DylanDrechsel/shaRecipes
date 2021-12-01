@@ -5,3 +5,5 @@
   width: 100vw;
   overflow: hidden;
 }
+
+@media only screen and (device-width : 375px) and (device-height : 667px) {}
