@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap'
+import { useRecoilState } from 'recoil'
+import { userState } from '../../../../recoil/atoms'
+import { useMutation } from '@apollo/client';
+import { SIGNUP } from '../../../../graphql/operations';
 
 const SignUpModal = ({ show, setShow }) => {
     const handleClose = () => setShow(false);
     const [userData, setUserData] = useState({});
+    const [user, setUser] = useRecoilState(userState);
+    const [signup, { loading: loading, error: error, data: data }] =
+		useMutation(SIGNUP);
 
     const handleInput = (event) => {
 		const input = { ...userData };
 		input[event.target.id] = event.target.value;
 		setUserData(input);
 	};
+
+    useEffect(() => {
+		if (!loading && data) {
+			const { signupUser } = data;
+			setUser(signupUser);
+            console.log(data)
+		}
+	}, [data]);
     
     return (
     <>
@@ -86,7 +101,18 @@ const SignUpModal = ({ show, setShow }) => {
           <Button variant="outline-light" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="outline-light">Sign Up</Button>
+          <Button variant="outline-light" onClick={
+              signup({
+                variables: {
+                    signupUserSignupInput: {
+                        email: userData.email,
+                        username: userData.username,
+                        password: userData.password,
+                    },
+                },
+            }),
+            handleClose
+          }>Sign Up</Button>
         </Modal.Footer>
       </Modal>
     </>
