@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil'
-import { userState } from '../../../recoil/atoms'
 import SignUpModal from './sign-up-components/SignUpModal';
 
 const SignUpButton = () => {
@@ -9,7 +7,7 @@ const SignUpButton = () => {
 
     return (
         <div className='lp-sub-main-div'>
-            <a href="#" class="animated-button1" onClick={handleShow}>
+            <a href="#" className="animated-button1" onClick={handleShow}>
                 <span></span>
                 <span></span>
                 <span></span>

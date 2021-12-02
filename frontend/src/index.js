@@ -6,14 +6,39 @@ import reportWebVitals from './reportWebVitals';
 import { RecoilRoot } from 'recoil';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+import { setContext } from '@apollo/client/link/context';
+import { createHttpLink } from 'apollo-link-http';
 
 require('dotenv').config();
+
+// Create HttpLink for Apollo
+// const httpLink = createHttpLink({
+// 	uri: 'http://localhost:4003/graphql',
+// });
+
+// // Initialize Apollo Client
+// const client = new ApolloClient({
+// 	// link: authLink.concat(httpLink),
+//   // link: httpLink,
+//   // link: httpLink,
+//   uri: 'http://localhost:4003/graphql',
+// 	cache: new InMemoryCache(),
+// });
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <RecoilRoot>
-        <App />
+        {/* <ApolloProvider client={client}> */}
+          <App />
+        {/* </ApolloProvider> */}
       </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,
