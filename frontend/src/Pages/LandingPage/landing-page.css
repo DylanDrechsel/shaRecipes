@@ -4,6 +4,9 @@
         width: 100vw;
     }
     .lp-title {
-        color: white
+        color: white;
+        padding-top: 100px;
+        font-size: 60px;
+        font-family: 'Roboto Condensed', sans-serif;
     }
 }
