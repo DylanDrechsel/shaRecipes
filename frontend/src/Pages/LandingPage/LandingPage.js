@@ -1,9 +1,10 @@
 import React from 'react';
+import './landing-page.css'
 
 const LandingPage = () => {
     return (
-        <div>
-            <h1> Test FROM ALDNING</h1>
+        <div className='lp-main-div'>
+            <h1 className='lp-title'> shaRecipes! </h1>
         </div>
     );
 };
