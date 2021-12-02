@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil'
+import { userState } from '../../../recoil/atoms'
 import SignUpModal from './sign-up-components/SignUpModal';
 
 const SignUpButton = () => {

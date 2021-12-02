@@ -14,6 +14,7 @@ const SignUpModal = ({ show, setShow }) => {
     return (
     <>
         <Modal
+            className='lp-sub-modal-div'
             show={show}
             onHide={handleClose}
             backdrop="static"
